@@ -1,5 +1,5 @@
 {
-  "name": "@metamask/logo",
+  "name": "@wanchainmask/logo",
   "version": "2.5.0",
   "description": "A browserifyable 3d metamask logo. [Live demo](http://metamask.github.io/logo/).",
   "main": "index.js",
