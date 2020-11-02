@@ -88,4 +88,4 @@ function parseOBJ (obj) {
 const obj = parseOBJ(fs.readFileSync('fox.obj').toString('utf8'))
 
 console.log(JSON.stringify(obj, null, 2))
-fs.writeFileSync('./fox.json',JSON.stringify(obj, null, 2), 'utf-8')
+// fs.writeFileSync('./fox.json',JSON.stringify(obj, null, 2), 'utf-8')
