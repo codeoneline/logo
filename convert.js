@@ -3,14 +3,19 @@ const fs = require('fs')
 function parseMTL (mtl) {
   const output = {}
   mtl.split('newmtl ').slice(1).forEach(function (block) {
-    const lines = block.split('\r\n')
+    // let lines = block.split('\t\n')
+    let lines = block.split('\n')
     const label = lines[0]
     const props = {}
     lines.slice(1).forEach(function (line) {
-      if (line.charAt(0) !== '\t') {
+      // if (line.charAt(0) !== '\t') {
+      //   return
+      // }
+      // const toks = line.split(/\s+/u).slice(1)
+      if (line === '') {
         return
       }
-      const toks = line.split(/\s+/u).slice(1)
+      const toks = line.split(/\s+/u)
       const tokenLabel = toks[0]
       const data = toks.slice(1)
       if (data.length === 1) {
@@ -30,7 +35,7 @@ function parseMTL (mtl) {
 const mtl = parseMTL(fs.readFileSync('fox.mtl').toString('utf8'))
 
 function parseOBJ (obj) {
-  const lines = obj.split('\r\n')
+  const lines = obj.split('\n')
 
   const positions = []
   const faceGroups = {}
@@ -42,7 +47,6 @@ function parseOBJ (obj) {
       return
     }
 
-    let f
     switch (toks[0]) {
       case 'v':
         positions.push(toks.slice(1, 4).map(function (p) {
@@ -72,7 +76,7 @@ function parseOBJ (obj) {
   Object.keys(faceGroups).forEach(function (name) {
     const material = mtl[name]
     chunks.push({
-      color: material.Ka.map(function (c) {
+      color: material.Kd.map(function (c) {
         return (255 * c) | 0
       }),
       faces: faceGroups[name],
